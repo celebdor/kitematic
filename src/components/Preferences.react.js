@@ -3,6 +3,7 @@ var metrics = require('../utils/MetricsUtil');
 var drivers = require('../utils/DriversUtil')
 var Router = require('react-router');
 var SetupVirtualBox = require('../stores/drivers/SetupVirtualBox');
+var SetupDigitalOcean = require('../stores/drivers/SetupDigitalOcean');
 var vboxBoot2DockerURL = "";
 var vboxMemory = "";
 var docAccessToken = "";
@@ -102,6 +103,18 @@ var Preferences = React.createClass({
       this.transitionTo('setup');
       SetupVirtualBox.setup().then(() => {
         console.log("SetupVirtualBox.setup() called");
+        this.transitionTo('search');
+      }).catch(err => {
+        metrics.track('Setup Failed', {
+          step: 'catch',
+          message: err.message
+        });
+        throw err;
+      });
+    } else if (this.state.digitalocean-enabled) {
+      this.transitionTo('setup');
+      SetupDigitalOcean.setup().then(() => {
+        console.log("SetupDigitalOcean.setup() called");
         this.transitionTo('search');
       }).catch(err => {
         metrics.track('Setup Failed', {
