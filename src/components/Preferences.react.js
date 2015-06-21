@@ -29,7 +29,10 @@ var Preferences = React.createClass({
       docAccessToken: localStorage.getItem('settings.digitalocean-access-token') || "",
       docImage: localStorage.getItem('settings.digitalocean-image') || "",
       docRegion: localStorage.getItem('settings.digitalocean-region') || "",
-      docSize: localStorage.getItem('settings.digitalocean-size')  || "512mb",
+      docSize: localStorage.getItem('settings.digitalocean-size')  || "512",
+
+      fusionEnabled: localStorage.getItem('settings.fusionEnabled') === 'true',
+      fusionBoot2DockerURL: localStorage.getItem('settings.vmwarefusion-boot2docker-url')  || "",
     };
   },
   handleGoBackClick: function () {
@@ -164,6 +167,12 @@ var Preferences = React.createClass({
     var tmpvalue = e.target.value;
     this.setState({
         docImage: tmpvalue
+    });
+  },
+  handleFusionBoxBoot2DockerURL: function(e) {
+    var tmpvalue = e.target.value;
+    this.setState({
+        fusionBoot2DockerURL: tmpvalue
     });
   },
   render: function () {
@@ -301,6 +310,14 @@ var Preferences = React.createClass({
                 <div className="option-value">
                   <input type="checkbox" checked={this.state.fusionEnabled} onChange={this.handleFusionEnabled}/>
                 </div>
+              </div>
+              <div className="option">
+                  <div className="option-name">
+                     vmwarefusion-boot2docker-url
+                  </div>
+                  <div className="option-value">
+                    <input type="text" value={this.state.fusionBoot2DockerURL} onChange={this.handleFusionBoxBoot2DockerURL} />
+                  </div>
               </div>
           </div>
 
